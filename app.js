@@ -6,15 +6,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
-const whiteList = ["https://www.karlotodoapp.tk/"];
+const whiteList = ["https://www.karlotodoapp.tk"];
 app.use(express.json());
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (whiteList.indexOf(origin) !== -1 || !origin)
-        return callback(null, true);
-      return callback("Not allowed by cors");
-    },
+    origin: whiteList,
   })
 );
 
