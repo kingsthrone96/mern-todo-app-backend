@@ -6,9 +6,17 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
-
+const whiteList = ["https://www.karlotodoapp.tk/"];
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (whiteList.indexOf(origin) !== -1 || !origin)
+        return callback(null, true);
+      return callback("Not allowed by cors");
+    },
+  })
+);
 
 const MONGO_LOCAL_URI = process.env.MONGO_LOCAL_URI;
 const MONGO_ATLAS_URI = process.env.MONGO_ATLAS_URI;
